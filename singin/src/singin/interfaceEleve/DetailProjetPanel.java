@@ -11,6 +11,9 @@ package singin.interfaceEleve;
  */
 public class DetailProjetPanel extends javax.swing.JPanel {
 
+  private GUIeleve jFrame;
+    
+  
     /**
      * Creates new form DetailProjetPanel
      */
@@ -21,6 +24,15 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 		
     }
 
+  public void setjFrame(GUIeleve jFrame) {
+	this.jFrame = jFrame;
+  }
+
+	
+	
+	
+	
+	
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,6 +136,11 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     monEnregistrementButton.setText("Mon enregistrement");
 
     fermerButton.setText("Fermer le projet");
+    fermerButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        fermerButtonActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -201,6 +218,11 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
+
+  private void fermerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermerButtonActionPerformed
+    
+	jFrame.fermerProjet();
+  }//GEN-LAST:event_fermerButtonActionPerformed
 
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

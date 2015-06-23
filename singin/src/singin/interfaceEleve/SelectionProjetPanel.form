@@ -138,6 +138,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Fermer"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fermerButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
