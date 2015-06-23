@@ -133,9 +133,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
-                      <Component id="playButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="playAllButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="stopButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="stopAllButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
@@ -196,8 +196,8 @@
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="playButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="stopButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="playAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="stopAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
@@ -265,26 +265,29 @@
         <Property name="text" type="java.lang.String" value="Raffraichir"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="playButton">
+    <Component class="javax.swing.JButton" name="playAllButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Play"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playAllButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="stopButton">
+    <Component class="javax.swing.JButton" name="stopAllButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Stop"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopAllButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="monEnregistrementButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Mon enregistrement"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="monEnregistrementButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="fermerButton">
       <Properties>
@@ -313,13 +316,21 @@
                               <Component id="jLabel2" alignment="0" min="-2" pref="285" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="playButton1" alignment="0" min="-2" pref="42" max="-2" attributes="0"/>
-                                      <Component id="recButton" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="playMonButton" pref="42" max="32767" attributes="0"/>
+                                      <Component id="recButton" pref="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="stopMonButton" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <Component id="commentaireLabel" alignment="0" min="-2" pref="173" max="-2" attributes="0"/>
@@ -346,14 +357,17 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="dateLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="playButton1" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel3" alignment="3" max="32767" attributes="0"/>
+                          <Component id="stopMonButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="playMonButton" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="recButton" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="recButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="supprimerButton" min="-2" max="-2" attributes="0"/>
@@ -428,7 +442,7 @@
             <Property name="text" type="java.lang.String" value="Date :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="playButton1">
+        <Component class="javax.swing.JButton" name="playMonButton">
         </Component>
         <Component class="javax.swing.JButton" name="validerButton">
           <Properties>
@@ -437,8 +451,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Valider"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="recButton">
         </Component>
         <Component class="javax.swing.JButton" name="annulerButton">
           <Properties>
@@ -487,6 +499,16 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="stopMonButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Stop"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="recButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="jToggleButton1"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">
@@ -508,11 +530,11 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-                          <Component id="playButton2" min="-2" max="-2" attributes="0"/>
+                          <Component id="playOneButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="pauseButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="stopButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="stopOneButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
@@ -534,9 +556,9 @@
                   <Component id="instrumentButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="35" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="playButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="playOneButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="pauseButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="stopButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="stopOneButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
               </Group>
@@ -546,7 +568,7 @@
       <SubComponents>
         <Component class="javax.swing.JSeparator" name="jSeparator4">
         </Component>
-        <Component class="javax.swing.JButton" name="playButton2">
+        <Component class="javax.swing.JButton" name="playOneButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Play"/>
           </Properties>
@@ -556,7 +578,7 @@
             <Property name="text" type="java.lang.String" value="Pause"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="stopButton1">
+        <Component class="javax.swing.JButton" name="stopOneButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Stop"/>
           </Properties>
