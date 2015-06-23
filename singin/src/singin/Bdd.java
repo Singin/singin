@@ -134,6 +134,16 @@ public class Bdd extends CModel {
 	}
 	return res;
   }
+  
+  public ComboBoxModel<ProjetJComboBox> getProjetsJComboBox(User user){
+	DefaultComboBoxModel<ProjetJComboBox> res = new DefaultComboBoxModel<>();
+	for (Projet p : projets.values()) {
+	  if(p.getEleves().contains(user)){
+		res.addElement(p.getProjetComboBox());
+	  }
+	}
+	return res;
+  }
 
   public ListModel<EnregistrementJList> getEnregistrementsJList(int idp)
 		  throws DataNotFound {

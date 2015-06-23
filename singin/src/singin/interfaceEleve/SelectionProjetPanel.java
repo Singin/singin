@@ -5,6 +5,13 @@
  */
 package singin.interfaceEleve;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import singin.ConsoleBdd;
+import singin.Projet;
+import singin.ProjetJComboBox;
+import singin.User;
+
 /**
  *
  * @author Othmane
@@ -12,14 +19,35 @@ package singin.interfaceEleve;
 public class SelectionProjetPanel extends javax.swing.JPanel {
 
   private GUIeleve jFrame;
-    
+  
   
     /**
      * Creates new form SelectionProjetPanel
      */
     public SelectionProjetPanel() {
         initComponents();
+		
+		//chargerListeProjets(); Génère une exception si laissé à l'instanciation
     }
+	
+	public void ouvrir(){
+	  String prenom = jFrame.getUser().getPrenom();
+	  bienvenueLabel.setText("Bonjour " + prenom + ". Bienvenue dans Sing'in.");
+	  chargerListeProjets();
+	  
+	}
+	
+	public void chargerListeProjets(){
+	  
+	  ComboBoxModel<ProjetJComboBox> model;
+	  if(jFrame.getUser() != null){
+		model = ConsoleBdd.getBdd().getProjetsJComboBox(jFrame.getUser());
+	  }
+	  else{
+		model = new DefaultComboBoxModel<>();
+	  }
+	  projetsComboBox.setModel(model);
+	}
 
   public void setjFrame(GUIeleve jFrame) {
 	this.jFrame = jFrame;
@@ -42,7 +70,7 @@ public class SelectionProjetPanel extends javax.swing.JPanel {
     projetsLabel = new javax.swing.JLabel();
     ouvrirButton = new javax.swing.JButton();
     rafraichirButton = new javax.swing.JButton();
-    lb_hello = new javax.swing.JLabel();
+    bienvenueLabel = new javax.swing.JLabel();
     fermerButton = new javax.swing.JButton();
 
     jLabel1.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
@@ -63,7 +91,7 @@ public class SelectionProjetPanel extends javax.swing.JPanel {
 
     rafraichirButton.setText("Raffraichir");
 
-    lb_hello.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
+    bienvenueLabel.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
 
     fermerButton.setText("Fermer");
     fermerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -79,35 +107,32 @@ public class SelectionProjetPanel extends javax.swing.JPanel {
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
+            .addGap(34, 34, 34)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                      .addComponent(projetsLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                      .addComponent(projetsComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGap(41, 41, 41)
-                    .addComponent(ouvrirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(rafraichirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-              .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lb_hello, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                  .addComponent(projetsLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                  .addComponent(projetsComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(ouvrirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rafraichirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(0, 25, Short.MAX_VALUE))
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addGap(0, 0, Short.MAX_VALUE)
             .addComponent(fermerButton)))
         .addContainerGap())
+      .addGroup(layout.createSequentialGroup()
+        .addGap(50, 50, 50)
+        .addComponent(bienvenueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(58, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(lb_hello, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(46, 46, 46)
         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -118,7 +143,9 @@ public class SelectionProjetPanel extends javax.swing.JPanel {
           .addComponent(projetsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(ouvrirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(rafraichirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+        .addComponent(bienvenueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(28, 28, 28)
         .addComponent(fermerButton)
         .addContainerGap())
     );
@@ -127,8 +154,9 @@ public class SelectionProjetPanel extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
     private void ouvrirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ouvrirButtonActionPerformed
-        
-	  jFrame.ouvrirProjet();
+      Projet pSelected;
+	  pSelected = ((ProjetJComboBox)projetsComboBox.getSelectedItem()).getProjet();
+	  jFrame.ouvrirProjet(pSelected);
     }//GEN-LAST:event_ouvrirButtonActionPerformed
 
   private void fermerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermerButtonActionPerformed
@@ -138,10 +166,10 @@ public class SelectionProjetPanel extends javax.swing.JPanel {
 
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JLabel bienvenueLabel;
   private javax.swing.JButton fermerButton;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JSeparator jSeparator1;
-  private javax.swing.JLabel lb_hello;
   private javax.swing.JButton ouvrirButton;
   private javax.swing.JComboBox projetsComboBox;
   private javax.swing.JLabel projetsLabel;
