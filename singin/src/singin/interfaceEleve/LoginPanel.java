@@ -37,34 +37,42 @@ public class LoginPanel extends javax.swing.JPanel {
 
     jLabel1 = new javax.swing.JLabel();
     jSeparator1 = new javax.swing.JSeparator();
-    jLabel2 = new javax.swing.JLabel();
-    jLabel3 = new javax.swing.JLabel();
-    txt_login = new javax.swing.JTextField();
-    jTextField2 = new javax.swing.JTextField();
-    btn_login = new javax.swing.JButton();
+    nomLabel = new javax.swing.JLabel();
+    motDePasseLabel = new javax.swing.JLabel();
+    nomTextField = new javax.swing.JTextField();
+    motDePasseTextField = new javax.swing.JTextField();
+    connexionButton = new javax.swing.JButton();
     lb_login = new javax.swing.JLabel();
+    fermerButton = new javax.swing.JButton();
 
     jLabel1.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
     jLabel1.setForeground(new java.awt.Color(0, 51, 51));
     jLabel1.setText("Connexion");
 
-    jLabel2.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel2.setText("Login :");
+    nomLabel.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+    nomLabel.setText("Login :");
 
-    jLabel3.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel3.setText("Mot de passe :");
+    motDePasseLabel.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+    motDePasseLabel.setText("Mot de passe :");
 
-    btn_login.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    btn_login.setForeground(new java.awt.Color(0, 51, 51));
-    btn_login.setText("Connexion");
-    btn_login.addActionListener(new java.awt.event.ActionListener() {
+    connexionButton.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+    connexionButton.setForeground(new java.awt.Color(0, 51, 51));
+    connexionButton.setText("Connexion");
+    connexionButton.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        btn_loginActionPerformed(evt);
+        connexionButtonActionPerformed(evt);
       }
     });
 
     lb_login.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
     lb_login.setForeground(new java.awt.Color(0, 102, 102));
+
+    fermerButton.setText("Fermer");
+    fermerButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        fermerButtonActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -78,14 +86,18 @@ public class LoginPanel extends javax.swing.JPanel {
           .addComponent(jSeparator1)
           .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-              .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+              .addComponent(motDePasseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+              .addComponent(nomLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGap(23, 23, 23)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addComponent(txt_login)
-              .addComponent(jTextField2)
-              .addComponent(btn_login, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))))
+              .addComponent(nomTextField)
+              .addComponent(motDePasseTextField)
+              .addComponent(connexionButton, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))))
         .addContainerGap(77, Short.MAX_VALUE))
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(fermerButton)
+        .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,23 +108,25 @@ public class LoginPanel extends javax.swing.JPanel {
         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(txt_login, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(nomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(nomTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(motDePasseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(motDePasseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
-        .addComponent(btn_login)
+        .addComponent(connexionButton)
         .addGap(18, 18, 18)
         .addComponent(lb_login, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(33, Short.MAX_VALUE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(fermerButton)
+        .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+    private void connexionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connexionButtonActionPerformed
         // TODO add your handling code here:
-        String nom = txt_login.getText();
+        String nom = nomTextField.getText();
         try {
             Eleve e = bdd.getEleve(nom);
             if (e != null)
@@ -124,17 +138,22 @@ public class LoginPanel extends javax.swing.JPanel {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_btn_loginActionPerformed
+    }//GEN-LAST:event_connexionButtonActionPerformed
+
+  private void fermerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermerButtonActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_fermerButtonActionPerformed
 
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton btn_login;
+  private javax.swing.JButton connexionButton;
+  private javax.swing.JButton fermerButton;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel2;
-  private javax.swing.JLabel jLabel3;
   private javax.swing.JSeparator jSeparator1;
-  private javax.swing.JTextField jTextField2;
   private javax.swing.JLabel lb_login;
-  private javax.swing.JTextField txt_login;
+  private javax.swing.JLabel motDePasseLabel;
+  private javax.swing.JTextField motDePasseTextField;
+  private javax.swing.JLabel nomLabel;
+  private javax.swing.JTextField nomTextField;
   // End of variables declaration//GEN-END:variables
 }
