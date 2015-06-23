@@ -45,8 +45,29 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 	this.jFrame = jFrame;
   }
 
-  
-  
+  public void demarrerLectureAll() {
+	lecteur = new Lecteur();
+	lecteur.addSamples(jFrame.getProjet().getSamples());
+	lecteur.play();
+  }
+
+  public void demarrerLectureOne() {
+	lecteur = new Lecteur();
+	lecteur.addSample(eSelect.getSample());
+	lecteur.play();
+  }
+
+  public void demarrerLectureMon() {
+	lecteur = new Lecteur();
+	lecteur.addSample(monEnregistrement.getSample());
+	lecteur.play();
+  }
+
+  public void arreterLecture() {
+	lecteur.stop();
+	lecteur = null;
+  }
+
   public void activateStopAvec() {
 	playAllButton.setEnabled(true);
 	stopAllButton.setEnabled(false);
@@ -58,7 +79,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 	recButton.setSelected(false);
 
   }
-  
+
   public void activateStopSans() {
 	playAllButton.setEnabled(true);
 	stopAllButton.setEnabled(false);
@@ -100,8 +121,8 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 	stopMonButton.setEnabled(true);
 	recButton.setEnabled(false);
   }
-  
-  public void activateArme(){
+
+  public void activateArme() {
 	playAllButton.setEnabled(false);
 	stopAllButton.setEnabled(false);
 	playOneButton.setEnabled(false);
@@ -110,8 +131,8 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 	stopMonButton.setEnabled(true);
 	recButton.setEnabled(true);
   }
-  
-  public void activateRec(){
+
+  public void activateRec() {
 	playAllButton.setEnabled(false);
 	stopAllButton.setEnabled(false);
 	playOneButton.setEnabled(false);
@@ -121,33 +142,25 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 	recButton.setEnabled(false);
   }
 
-  public void demarrerLectureAll() {
-	//Demarrer le lecteur
-  }
-
-  public void arreterLectureAll() {
-	// arreter le lecteur
-  }
-  
-  private void chargerListeEnregistrements() throws DataNotFound{
+  private void chargerListeEnregistrements() throws DataNotFound {
 	Projet projet = jFrame.getProjet();
 	ListModel<EnregistrementJList> model;
-	
+
 	model = ConsoleBdd.getBdd().getEnregistrementsJList(projet.getIdProjet());
 	enregistrementsList.setModel(model);
   }
 
   public void ouvrirProjet() throws DataNotFound {
-	
+
 	etat = ETAT.STOPSANS;
 	activateStopSans();
 	detailButton.setEnabled(false);
 	monEnregistrement = null;
 	lecteur = null;
 	eSelect = null;
-	
+
 	chargerListeEnregistrements();
-	
+
 	nomLabel.setText("");
 	prenomLabel.setText("");
 	instrumentLabel.setText("");
@@ -429,10 +442,20 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     );
 
     playOneButton.setText("Play");
+    playOneButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        playOneButtonActionPerformed(evt);
+      }
+    });
 
     pauseButton.setText("Pause");
 
     stopOneButton.setText("Stop");
+    stopOneButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        stopOneButtonActionPerformed(evt);
+      }
+    });
 
     jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
     jLabel5.setForeground(new java.awt.Color(0, 51, 51));
@@ -567,8 +590,8 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   }//GEN-LAST:event_fermerButtonActionPerformed
 
     private void enregistrementsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_enregistrementsListValueChanged
-	  if(!enregistrementsList.isSelectionEmpty()){
-		eSelect = ((EnregistrementJList)enregistrementsList.getSelectedValue()).getEnregistrement();
+	  if (!enregistrementsList.isSelectionEmpty()) {
+		eSelect = ((EnregistrementJList) enregistrementsList.getSelectedValue()).getEnregistrement();
 		detailButton.setEnabled(true);
 	  }
     }//GEN-LAST:event_enregistrementsListValueChanged
@@ -582,7 +605,21 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 		  break;
 		case PLAYALL:
 		  throw new RuntimeException();
+		case STOPAVEC:
+		  etat = ETAT.PLAYALL;
+		  activatePlayAll();
+		  demarrerLectureAll();
+		  break;
+		case PLAYONE:
+		  throw new RuntimeException();
+		case PLAYMON:
+		  throw new RuntimeException();
+		case ARME:
+		  throw new RuntimeException();
+		case REC:
+		  throw new RuntimeException();
 	  }
+
     }//GEN-LAST:event_playAllButtonActionPerformed
 
     private void stopAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopAllButtonActionPerformed
@@ -590,41 +627,107 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 		case STOPSANS:
 		  throw new RuntimeException();
 		case PLAYALL:
-		  etat = ETAT.STOPSANS;
-		  activateStopSans();
-		  arreterLectureAll();
+		  if (monEnregistrement == null) {
+			etat = ETAT.STOPSANS;
+			activateStopSans();
+		  } else {
+			etat = ETAT.STOPAVEC;
+			activateStopAvec();
+		  }
+		  arreterLecture();
 		  break;
+		case STOPAVEC:
+		  throw new RuntimeException();
+		case PLAYONE:
+		  throw new RuntimeException();
+		case PLAYMON:
+		  throw new RuntimeException();
+		case ARME:
+		  throw new RuntimeException();
+		case REC:
+		  throw new RuntimeException();
 	  }
     }//GEN-LAST:event_stopAllButtonActionPerformed
 
   private void monEnregistrementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monEnregistrementButtonActionPerformed
-	
+
 	try {
 	  monEnregistrement = ConsoleBdd.getBdd().getEnregistrementProjetUser(
 			  jFrame.getProjet().getIdProjet(), jFrame.getUser().getIdUser());
 	  etat = ETAT.STOPAVEC;
 	  activateStopAvec();
-	  
+
 	  commentaireTextArea.setText(monEnregistrement.getCommentaire());
-	  
+
 	  monRecPanel.setVisible(true);
-	  
+
 	} catch (DataNotFound ex) {
 	  System.out.println("Pas d'enregistrement pour cet user");
 	  monEnregistrement = null;
-	  
-	  
+
 	  //Logger.getLogger(DetailProjetPanel.class.getName()).log(Level.SEVERE, null, ex);
 	}
-	
+
   }//GEN-LAST:event_monEnregistrementButtonActionPerformed
 
   private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
-    nomLabel.setText(eSelect.getUser().getNom());
+	nomLabel.setText(eSelect.getUser().getNom());
 	prenomLabel.setText(eSelect.getUser().getPrenom());
 	instrumentLabel.setText(eSelect.getUser().getInstrument());
 	detailRecPanel.setVisible(true);
   }//GEN-LAST:event_detailButtonActionPerformed
+
+  private void playOneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playOneButtonActionPerformed
+    switch (etat) {
+		case STOPSANS:
+		  etat = ETAT.PLAYONE;
+		  activatePlayOne();
+		  demarrerLectureOne();
+		  break;
+		case PLAYALL:
+		  throw new RuntimeException();
+		case STOPAVEC:
+		  etat = ETAT.PLAYONE;
+		  activatePlayOne();
+		  demarrerLectureOne();
+		  break;
+		case PLAYONE:
+		  throw new RuntimeException();
+		case PLAYMON:
+		  throw new RuntimeException();
+		case ARME:
+		  throw new RuntimeException();
+		case REC:
+		  throw new RuntimeException();
+	  }
+  }//GEN-LAST:event_playOneButtonActionPerformed
+
+  private void stopOneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopOneButtonActionPerformed
+    switch (etat) {
+		case STOPSANS:
+		  throw new RuntimeException();
+		case PLAYALL:
+		  throw new RuntimeException();
+		case STOPAVEC:
+		  throw new RuntimeException();
+		case PLAYONE:
+		  if (monEnregistrement == null) {
+			etat = ETAT.STOPSANS;
+			activateStopSans();
+		  } else {
+			etat = ETAT.STOPAVEC;
+			activateStopAvec();
+		  }
+		  arreterLecture();
+		  break;
+		case PLAYMON:
+		  throw new RuntimeException();
+		case ARME:
+		  throw new RuntimeException();
+		case REC:
+		  throw new RuntimeException();
+	  }
+  }//GEN-LAST:event_stopOneButtonActionPerformed
 
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

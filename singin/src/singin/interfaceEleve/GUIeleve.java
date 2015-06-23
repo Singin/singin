@@ -34,7 +34,7 @@ public class GUIeleve extends javax.swing.JFrame {
 	
 	user = null;
 	
-	this.setSize(850, 700);
+	this.setSize(1000, 700);
 	activationLogin();
 	
 	
