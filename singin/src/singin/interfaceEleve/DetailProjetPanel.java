@@ -49,38 +49,17 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     jLabel1 = new javax.swing.JLabel();
     jSeparator1 = new javax.swing.JSeparator();
     jScrollPane1 = new javax.swing.JScrollPane();
-    jList1 = new javax.swing.JList();
-    jLabel2 = new javax.swing.JLabel();
-    jButton1 = new javax.swing.JButton();
-    jButton2 = new javax.swing.JButton();
-    jButton3 = new javax.swing.JButton();
-    jButton4 = new javax.swing.JButton();
-    jButton5 = new javax.swing.JButton();
-    jButton6 = new javax.swing.JButton();
-    jButton7 = new javax.swing.JButton();
-    jButton8 = new javax.swing.JButton();
-    jButton9 = new javax.swing.JButton();
-    jLabel3 = new javax.swing.JLabel();
-    jLabel4 = new javax.swing.JLabel();
-    jLabel5 = new javax.swing.JLabel();
-    jLabel6 = new javax.swing.JLabel();
-    jSeparator2 = new javax.swing.JSeparator();
-    jLabel13 = new javax.swing.JLabel();
-    jLabel14 = new javax.swing.JLabel();
-    jLabel15 = new javax.swing.JLabel();
-    jSeparator4 = new javax.swing.JSeparator();
-    jScrollPane4 = new javax.swing.JScrollPane();
-    jTextArea3 = new javax.swing.JTextArea();
-    jLabel16 = new javax.swing.JLabel();
-    jButton15 = new javax.swing.JButton();
-    jButton16 = new javax.swing.JButton();
-    jButton17 = new javax.swing.JButton();
-    jButton18 = new javax.swing.JButton();
-    jLabel17 = new javax.swing.JLabel();
-    jLabel18 = new javax.swing.JLabel();
-    jButton19 = new javax.swing.JButton();
-    jScrollPane5 = new javax.swing.JScrollPane();
-    jTextArea4 = new javax.swing.JTextArea();
+    enregistrementsLabel = new javax.swing.JList();
+    enregistrementLabel = new javax.swing.JLabel();
+    detailButton = new javax.swing.JButton();
+    rafraichirButton = new javax.swing.JButton();
+    playButton = new javax.swing.JButton();
+    stopButton = new javax.swing.JButton();
+    recButton = new javax.swing.JButton();
+    monEnregistrementButton = new javax.swing.JButton();
+    monRecPanel1 = new singin.interfaceEleve.MonRecPanel();
+    detailRecPanel1 = new singin.interfaceEleve.DetailRecPanel();
+    fermerButton = new javax.swing.JButton();
 
     jLabel7.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
     jLabel7.setText("Commentaire du professeur :");
@@ -122,82 +101,29 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     jLabel1.setForeground(new java.awt.Color(0, 51, 51));
     jLabel1.setText("Projet initié par ...");
 
-    jList1.setModel(new javax.swing.AbstractListModel() {
+    enregistrementsLabel.setModel(new javax.swing.AbstractListModel() {
       String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
       public int getSize() { return strings.length; }
       public Object getElementAt(int i) { return strings[i]; }
     });
-    jScrollPane1.setViewportView(jList1);
+    jScrollPane1.setViewportView(enregistrementsLabel);
 
-    jLabel2.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel2.setText("Liste des enregistrements :");
+    enregistrementLabel.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+    enregistrementLabel.setText("Liste des enregistrements :");
 
-    jButton1.setText("Voir detail");
+    detailButton.setText("Voir detail");
 
-    jButton2.setText("Raffraichir");
+    rafraichirButton.setText("Raffraichir");
 
-    jButton3.setText("Play");
+    playButton.setText("Play");
 
-    jButton4.setText("Stop");
+    stopButton.setText("Stop");
 
-    jButton5.setText("Rec");
+    recButton.setText("Rec");
 
-    jButton6.setText("Mon enregistrement");
+    monEnregistrementButton.setText("Mon enregistrement");
 
-    jButton7.setText("Play");
-
-    jButton8.setText("Pause");
-
-    jButton9.setText("Stop");
-
-    jLabel3.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
-    jLabel3.setForeground(new java.awt.Color(0, 51, 51));
-    jLabel3.setText("Detail de l'enregistrement ...");
-
-    jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel4.setText("Nom :");
-
-    jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel5.setText("Prenom :");
-
-    jLabel6.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel6.setText("Instrument :");
-
-    jLabel13.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel13.setText("Commentaire du professeur :");
-
-    jLabel14.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
-    jLabel14.setForeground(new java.awt.Color(0, 51, 51));
-    jLabel14.setText("Mon enregistrement :");
-
-    jLabel15.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel15.setText("Répondre :");
-
-    jTextArea3.setColumns(20);
-    jTextArea3.setRows(5);
-    jScrollPane4.setViewportView(jTextArea3);
-
-    jLabel16.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel16.setText("Date :");
-
-    jButton16.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jButton16.setText("Valider");
-
-    jButton18.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jButton18.setText("Annuler");
-
-    jLabel17.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel17.setText("Écouter");
-
-    jLabel18.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jLabel18.setText("Ré-enregistrer");
-
-    jButton19.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    jButton19.setText("Supprimer");
-
-    jTextArea4.setColumns(20);
-    jTextArea4.setRows(5);
-    jScrollPane5.setViewportView(jTextArea4);
+    fermerButton.setText("Fermer le projet");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -206,65 +132,40 @@ public class DetailProjetPanel extends javax.swing.JPanel {
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addGap(26, 26, 26)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel6)
-                  .addComponent(jLabel5)
-                  .addComponent(jLabel4)
-                  .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addGroup(layout.createSequentialGroup()
-                    .addGap(64, 64, 64)
-                    .addComponent(jButton7)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jButton8)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jButton9)))
-                .addGroup(layout.createSequentialGroup()
-                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                  .addGap(27, 27, 27)
-                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(104, 104, 104)
-            .addComponent(jButton3)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jButton4)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jButton5)))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                      .addComponent(enregistrementLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                      .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addGap(27, 27, 27)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                      .addComponent(detailButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                      .addComponent(rafraichirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                      .addComponent(monEnregistrementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+              .addGroup(layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addComponent(playButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stopButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(recButton)))
+            .addGap(0, 0, Short.MAX_VALUE))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(detailRecPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-            .addComponent(jScrollPane4)
-            .addComponent(jScrollPane5)
-            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jButton19)
-            .addComponent(jLabel16)
-            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(layout.createSequentialGroup()
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel17)
-                .addComponent(jLabel18)))
-            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(layout.createSequentialGroup()
-            .addGap(77, 77, 77)
-            .addComponent(jButton16)
-            .addGap(18, 18, 18)
-            .addComponent(jButton18)))
-        .addGap(192, 192, 192))
+            .addComponent(monRecPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(58, 58, 58))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(fermerButton)
+            .addContainerGap())))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,123 +173,66 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addGap(23, 23, 23)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jLabel16)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jButton15)
-              .addComponent(jLabel17))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jButton17)
-              .addComponent(jLabel18))
-            .addGap(18, 18, 18)
-            .addComponent(jButton19)
-            .addGap(11, 11, 11)
-            .addComponent(jLabel13)
-            .addGap(12, 12, 12)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jLabel15)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(monRecPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jButton16)
-              .addComponent(jButton18)))
+            .addComponent(fermerButton))
           .addGroup(layout.createSequentialGroup()
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jLabel2)
+            .addComponent(enregistrementLabel)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
               .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(detailButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rafraichirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(monEnregistrementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jButton3)
-              .addComponent(jButton4)
-              .addComponent(jButton5))
-            .addGap(44, 44, 44)
-            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(playButton)
+              .addComponent(stopButton)
+              .addComponent(recButton))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18)
-            .addComponent(jLabel4)
-            .addGap(18, 18, 18)
-            .addComponent(jLabel5)
-            .addGap(18, 18, 18)
-            .addComponent(jLabel6)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jButton7)
-              .addComponent(jButton8)
-              .addComponent(jButton9)))))
+            .addComponent(detailRecPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
 
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton jButton1;
+  private javax.swing.JButton detailButton;
+  private singin.interfaceEleve.DetailRecPanel detailRecPanel1;
+  private javax.swing.JLabel enregistrementLabel;
+  private javax.swing.JList enregistrementsLabel;
+  private javax.swing.JButton fermerButton;
   private javax.swing.JButton jButton10;
   private javax.swing.JButton jButton11;
   private javax.swing.JButton jButton12;
   private javax.swing.JButton jButton13;
   private javax.swing.JButton jButton14;
-  private javax.swing.JButton jButton15;
-  private javax.swing.JButton jButton16;
-  private javax.swing.JButton jButton17;
-  private javax.swing.JButton jButton18;
-  private javax.swing.JButton jButton19;
-  private javax.swing.JButton jButton2;
-  private javax.swing.JButton jButton3;
-  private javax.swing.JButton jButton4;
-  private javax.swing.JButton jButton5;
-  private javax.swing.JButton jButton6;
-  private javax.swing.JButton jButton7;
-  private javax.swing.JButton jButton8;
-  private javax.swing.JButton jButton9;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel11;
   private javax.swing.JLabel jLabel12;
-  private javax.swing.JLabel jLabel13;
-  private javax.swing.JLabel jLabel14;
-  private javax.swing.JLabel jLabel15;
-  private javax.swing.JLabel jLabel16;
-  private javax.swing.JLabel jLabel17;
-  private javax.swing.JLabel jLabel18;
-  private javax.swing.JLabel jLabel2;
-  private javax.swing.JLabel jLabel3;
-  private javax.swing.JLabel jLabel4;
-  private javax.swing.JLabel jLabel5;
-  private javax.swing.JLabel jLabel6;
   private javax.swing.JLabel jLabel7;
   private javax.swing.JLabel jLabel8;
   private javax.swing.JLabel jLabel9;
-  private javax.swing.JList jList1;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JScrollPane jScrollPane3;
-  private javax.swing.JScrollPane jScrollPane4;
-  private javax.swing.JScrollPane jScrollPane5;
   private javax.swing.JSeparator jSeparator1;
-  private javax.swing.JSeparator jSeparator2;
   private javax.swing.JSeparator jSeparator3;
-  private javax.swing.JSeparator jSeparator4;
   private javax.swing.JTextArea jTextArea1;
   private javax.swing.JTextArea jTextArea2;
-  private javax.swing.JTextArea jTextArea3;
-  private javax.swing.JTextArea jTextArea4;
+  private javax.swing.JButton monEnregistrementButton;
+  private singin.interfaceEleve.MonRecPanel monRecPanel1;
+  private javax.swing.JButton playButton;
+  private javax.swing.JButton rafraichirButton;
+  private javax.swing.JButton recButton;
+  private javax.swing.JButton stopButton;
   // End of variables declaration//GEN-END:variables
 }
