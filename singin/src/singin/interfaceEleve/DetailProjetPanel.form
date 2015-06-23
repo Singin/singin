@@ -141,29 +141,35 @@
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" pref="259" max="-2" attributes="0"/>
-                          <Component id="jSeparator1" min="-2" pref="300" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="enregistrementLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="enregistrementLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jScrollPane1" min="-2" pref="300" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="detailButton" alignment="1" min="-2" pref="129" max="-2" attributes="0"/>
+                                      <Component id="rafraichirButton" alignment="1" min="-2" pref="129" max="-2" attributes="0"/>
+                                      <Component id="monEnregistrementButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="detailButton" max="32767" attributes="0"/>
-                                  <Component id="rafraichirButton" max="32767" attributes="0"/>
-                                  <Component id="monEnregistrementButton" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jSeparator1" alignment="0" min="-2" pref="456" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="detailRecPanel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <Component id="fermerButton" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="261" max="-2" attributes="0"/>
+                      <Component id="fermerButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="246" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="monRecPanel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="213" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -173,7 +179,7 @@
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="monRecPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="fermerButton" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -185,7 +191,7 @@
                       <Component id="enregistrementLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <Component id="detailButton" min="-2" pref="31" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="rafraichirButton" min="-2" pref="31" max="-2" attributes="0"/>
@@ -200,7 +206,7 @@
                           <Component id="stopAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="detailRecPanel" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -259,6 +265,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Voir detail"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="detailButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="rafraichirButton">
       <Properties>
@@ -297,7 +306,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fermerButtonActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="monRecPanel">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -511,7 +520,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanel2">
+    <Container class="javax.swing.JPanel" name="detailRecPanel">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -521,7 +530,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="instrumentButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="instrumentLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="prenomLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="nomLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="0" min="-2" pref="219" max="-2" attributes="0"/>
@@ -553,7 +562,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="prenomLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="instrumentButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="instrumentLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="35" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="playOneButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -610,7 +619,7 @@
             <Property name="text" type="java.lang.String" value="Prenom :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="instrumentButton">
+        <Component class="javax.swing.JLabel" name="instrumentLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tw Cen MT" size="14" style="0"/>

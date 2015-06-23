@@ -7,6 +7,7 @@ package singin.interfaceEleve;
 
 import javax.swing.ListModel;
 import singin.ConsoleBdd;
+import singin.DataNotFound;
 import singin.Enregistrement;
 import singin.EnregistrementJList;
 import singin.Lecteur;
@@ -20,7 +21,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 
   private GUIeleve jFrame;
   private Projet projet;
-  private Enregistrement enregistrementSelectionne;
+  private Enregistrement eSelect;
   private Lecteur lecteur;
   private Enregistrement monEnregistrement;
 
@@ -42,6 +43,8 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 	this.jFrame = jFrame;
   }
 
+  
+  
   public void activateStopAll() {
 	playAllButton.setEnabled(true);
 	stopAllButton.setEnabled(false);
@@ -111,26 +114,27 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   public void arreterLectureAll() {
 	// arreter le lecteur
   }
-
-  public void ouvrirProjet() {
+  
+  private void chargerListeEnregistrements() throws DataNotFound{
 	projet = jFrame.getProjet();
 	ListModel<EnregistrementJList> model;
-//	try {
-//	  model = ConsoleBdd.getBdd().getEnregistrementsJList(projet.getIdProjet());
-//	  enregistrementsList.setModel(model);
+	
+	model = ConsoleBdd.getBdd().getEnregistrementsJList(projet.getIdProjet());
+	enregistrementsList.setModel(model);
+  }
 
-//	  lsl = new ListSelectionListener() {
-//	  @Override
-//	  public void valueChanged(ListSelectionEvent lse) {
-//		enregistrement = ((EnregistrementJList) enregistrementsList.getSelectedValue()).getEnregistrement();
-//		afficherDetail();
-//	  }
-//	};
-//	enregistrementsList.addListSelectionListener(lsl);
-//	} catch (DataNotFound ex) {
-//	  jFrame.fermerProjet();
-//	  //Logger.getLogger(DetailProjetPanel.class.getName()).log(Level.SEVERE, null, ex);
-//	}
+  public void ouvrirProjet() throws DataNotFound {
+	
+	chargerListeEnregistrements();
+	nomLabel.setText("");
+	prenomLabel.setText("");
+	instrumentLabel.setText("");
+	dateLabel.setText("");
+	commentaireTextArea.setText("");
+	repondreTextArea.setText("");
+	monRecPanel.setVisible(false);
+	detailRecPanel.setVisible(false);
+	
   }
 
   /**
@@ -169,7 +173,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     stopAllButton = new javax.swing.JButton();
     monEnregistrementButton = new javax.swing.JButton();
     fermerButton = new javax.swing.JButton();
-    jPanel1 = new javax.swing.JPanel();
+    monRecPanel = new javax.swing.JPanel();
     commentaireLabel = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
     repondreLabel = new javax.swing.JLabel();
@@ -187,7 +191,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     commentaireTextArea = new javax.swing.JTextArea();
     stopMonButton = new javax.swing.JButton();
     recButton = new javax.swing.JToggleButton();
-    jPanel2 = new javax.swing.JPanel();
+    detailRecPanel = new javax.swing.JPanel();
     jSeparator4 = new javax.swing.JSeparator();
     playOneButton = new javax.swing.JButton();
     pauseButton = new javax.swing.JButton();
@@ -195,7 +199,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     jLabel5 = new javax.swing.JLabel();
     nomLabel = new javax.swing.JLabel();
     prenomLabel = new javax.swing.JLabel();
-    instrumentButton = new javax.swing.JLabel();
+    instrumentLabel = new javax.swing.JLabel();
 
     jLabel7.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
     jLabel7.setText("Commentaire du professeur :");
@@ -253,6 +257,11 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     enregistrementLabel.setText("Liste des enregistrements :");
 
     detailButton.setText("Voir detail");
+    detailButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        detailButtonActionPerformed(evt);
+      }
+    });
 
     rafraichirButton.setText("Raffraichir");
 
@@ -324,15 +333,15 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 
     recButton.setText("jToggleButton1");
 
-    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-    jPanel1.setLayout(jPanel1Layout);
-    jPanel1Layout.setHorizontalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel1Layout.createSequentialGroup()
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel1Layout.createSequentialGroup()
+    javax.swing.GroupLayout monRecPanelLayout = new javax.swing.GroupLayout(monRecPanel);
+    monRecPanel.setLayout(monRecPanelLayout);
+    monRecPanelLayout.setHorizontalGroup(
+      monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(monRecPanelLayout.createSequentialGroup()
+        .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(monRecPanelLayout.createSequentialGroup()
             .addGap(26, 26, 26)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
               .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
               .addComponent(jScrollPane5)
               .addComponent(jSeparator2)
@@ -340,31 +349,31 @@ public class DetailProjetPanel extends javax.swing.JPanel {
               .addComponent(supprimerButton)
               .addComponent(dateLabel)
               .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+              .addGroup(monRecPanelLayout.createSequentialGroup()
+                .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                   .addComponent(playMonButton, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                   .addComponent(recButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addGroup(monRecPanelLayout.createSequentialGroup()
                     .addComponent(jLabel3)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(stopMonButton)
                     .addGap(43, 43, 43))
-                  .addGroup(jPanel1Layout.createSequentialGroup()
+                  .addGroup(monRecPanelLayout.createSequentialGroup()
                     .addComponent(jLabel4)
                     .addGap(0, 0, Short.MAX_VALUE))))
               .addComponent(commentaireLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addGroup(jPanel1Layout.createSequentialGroup()
+          .addGroup(monRecPanelLayout.createSequentialGroup()
             .addGap(103, 103, 103)
             .addComponent(validerButton)
             .addGap(18, 18, 18)
             .addComponent(annulerButton)))
         .addContainerGap(26, Short.MAX_VALUE))
     );
-    jPanel1Layout.setVerticalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel1Layout.createSequentialGroup()
+    monRecPanelLayout.setVerticalGroup(
+      monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(monRecPanelLayout.createSequentialGroup()
         .addContainerGap()
         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -372,13 +381,13 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(dateLabel)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-          .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(stopMonButton))
           .addComponent(playMonButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel4)
           .addComponent(recButton))
         .addGap(18, 18, 18)
@@ -392,7 +401,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(validerButton)
           .addComponent(annulerButton))
         .addContainerGap())
@@ -414,24 +423,24 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     prenomLabel.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
     prenomLabel.setText("Prenom :");
 
-    instrumentButton.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    instrumentButton.setText("Instrument :");
+    instrumentLabel.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+    instrumentLabel.setText("Instrument :");
 
-    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-    jPanel2.setLayout(jPanel2Layout);
-    jPanel2Layout.setHorizontalGroup(
-      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel2Layout.createSequentialGroup()
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel2Layout.createSequentialGroup()
+    javax.swing.GroupLayout detailRecPanelLayout = new javax.swing.GroupLayout(detailRecPanel);
+    detailRecPanel.setLayout(detailRecPanelLayout);
+    detailRecPanelLayout.setHorizontalGroup(
+      detailRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(detailRecPanelLayout.createSequentialGroup()
+        .addGroup(detailRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(detailRecPanelLayout.createSequentialGroup()
             .addGap(29, 29, 29)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(instrumentButton)
+            .addGroup(detailRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(instrumentLabel)
               .addComponent(prenomLabel)
               .addComponent(nomLabel)
               .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addGroup(jPanel2Layout.createSequentialGroup()
+          .addGroup(detailRecPanelLayout.createSequentialGroup()
             .addGap(93, 93, 93)
             .addComponent(playOneButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -440,9 +449,9 @@ public class DetailProjetPanel extends javax.swing.JPanel {
             .addComponent(stopOneButton)))
         .addContainerGap(20, Short.MAX_VALUE))
     );
-    jPanel2Layout.setVerticalGroup(
-      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel2Layout.createSequentialGroup()
+    detailRecPanelLayout.setVerticalGroup(
+      detailRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(detailRecPanelLayout.createSequentialGroup()
         .addGap(36, 36, 36)
         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -452,9 +461,9 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addGap(18, 18, 18)
         .addComponent(prenomLabel)
         .addGap(18, 18, 18)
-        .addComponent(instrumentButton)
+        .addComponent(instrumentLabel)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGroup(detailRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(playOneButton)
           .addComponent(pauseButton)
           .addComponent(stopOneButton))
@@ -476,22 +485,26 @@ public class DetailProjetPanel extends javax.swing.JPanel {
             .addGap(26, 26, 26)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                  .addComponent(enregistrementLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(detailButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(rafraichirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(monEnregistrementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-          .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(18, 18, 18)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(fermerButton))
-        .addContainerGap(23, Short.MAX_VALUE))
+              .addComponent(enregistrementLabel)
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                  .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(detailButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rafraichirButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(monEnregistrementButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))))
+          .addComponent(detailRecPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(261, 261, 261)
+            .addComponent(fermerButton)
+            .addContainerGap(246, Short.MAX_VALUE))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(monRecPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(213, 213, 213))))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -499,7 +512,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addGap(23, 23, 23)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(monRecPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(fermerButton))
           .addGroup(layout.createSequentialGroup()
@@ -510,7 +523,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
             .addComponent(enregistrementLabel)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addGroup(layout.createSequentialGroup()
+              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(detailButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rafraichirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -522,7 +535,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
               .addComponent(playAllButton)
               .addComponent(stopAllButton))
             .addGap(18, 18, 18)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(detailRecPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
@@ -532,7 +545,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   }//GEN-LAST:event_fermerButtonActionPerformed
 
     private void enregistrementsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_enregistrementsListValueChanged
-	  //enregistrementSelectionne = (Enregistrement) enregistrementsList.getSelectedValue();
+	  eSelect = ((EnregistrementJList)enregistrementsList.getSelectedValue()).getEnregistrement();
 	  detailButton.setEnabled(true);
     }//GEN-LAST:event_enregistrementsListValueChanged
 
@@ -564,6 +577,13 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 	// TODO add your handling code here:
   }//GEN-LAST:event_monEnregistrementButtonActionPerformed
 
+  private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
+    nomLabel.setText(eSelect.getUser().getNom());
+	prenomLabel.setText(eSelect.getUser().getPrenom());
+	instrumentLabel.setText(eSelect.getUser().getInstrument());
+	detailRecPanel.setVisible(true);
+  }//GEN-LAST:event_detailButtonActionPerformed
+
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton annulerButton;
@@ -571,10 +591,11 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   private javax.swing.JTextArea commentaireTextArea;
   private javax.swing.JLabel dateLabel;
   private javax.swing.JButton detailButton;
+  private javax.swing.JPanel detailRecPanel;
   private javax.swing.JLabel enregistrementLabel;
   private javax.swing.JList enregistrementsList;
   private javax.swing.JButton fermerButton;
-  private javax.swing.JLabel instrumentButton;
+  private javax.swing.JLabel instrumentLabel;
   private javax.swing.JButton jButton10;
   private javax.swing.JButton jButton11;
   private javax.swing.JButton jButton12;
@@ -591,8 +612,6 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   private javax.swing.JLabel jLabel7;
   private javax.swing.JLabel jLabel8;
   private javax.swing.JLabel jLabel9;
-  private javax.swing.JPanel jPanel1;
-  private javax.swing.JPanel jPanel2;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JScrollPane jScrollPane3;
@@ -605,6 +624,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   private javax.swing.JTextArea jTextArea1;
   private javax.swing.JTextArea jTextArea2;
   private javax.swing.JButton monEnregistrementButton;
+  private javax.swing.JPanel monRecPanel;
   private javax.swing.JLabel nomLabel;
   private javax.swing.JButton pauseButton;
   private javax.swing.JButton playAllButton;
