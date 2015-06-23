@@ -5,9 +5,12 @@
  */
 package singin.interfaceEleve;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import singin.ConsoleBdd;
+import singin.DataNotFound;
 import singin.Projet;
 import singin.ProjetJComboBox;
 import singin.User;
@@ -156,7 +159,11 @@ public class SelectionProjetPanel extends javax.swing.JPanel {
     private void ouvrirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ouvrirButtonActionPerformed
       Projet pSelected;
 	  pSelected = ((ProjetJComboBox)projetsComboBox.getSelectedItem()).getProjet();
+	try {
 	  jFrame.ouvrirProjet(pSelected);
+	} catch (DataNotFound ex) {
+	  Logger.getLogger(SelectionProjetPanel.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }//GEN-LAST:event_ouvrirButtonActionPerformed
 
   private void fermerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermerButtonActionPerformed

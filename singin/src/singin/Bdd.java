@@ -65,6 +65,17 @@ public class Bdd extends CModel {
 	Enregistrement eh = new Enregistrement("p2sample4.wav", uc);
 	Enregistrement ei = new Enregistrement("p2sample5.wav", ud);
 	Enregistrement ej = new Enregistrement("p2sample6.wav", ue);
+	
+	ea.setCommentaire("Appréciation du professeur");
+	eb.setCommentaire("Appréciation du professeur");
+	ec.setCommentaire("Appréciation du professeur");
+	ed.setCommentaire("Appréciation du professeur");
+	ef.setCommentaire("Appréciation du professeur");
+	eg.setCommentaire("Appréciation du professeur");
+	eh.setCommentaire("Appréciation du professeur");
+	ei.setCommentaire("Appréciation du professeur");
+	ej.setCommentaire("Appréciation du professeur");
+	
 
 	Projet p1 = new Projet("Travail vamp et turn around");
 	p1.addEnregistrement(ea);
@@ -134,11 +145,11 @@ public class Bdd extends CModel {
 	}
 	return res;
   }
-  
-  public ComboBoxModel<ProjetJComboBox> getProjetsJComboBox(User user){
+
+  public ComboBoxModel<ProjetJComboBox> getProjetsJComboBox(User user) {
 	DefaultComboBoxModel<ProjetJComboBox> res = new DefaultComboBoxModel<>();
 	for (Projet p : projets.values()) {
-	  if(p.getEleves().contains(user)){
+	  if (p.getEleves().contains(user)) {
 		res.addElement(p.getProjetComboBox());
 	  }
 	}
@@ -152,6 +163,19 @@ public class Bdd extends CModel {
 	  res.addElement(e.getEnregistrementJList());
 	}
 	return res;
+  }
+
+  public Enregistrement getEnregistrementProjetUser(int idp, int idu)
+		  throws DataNotFound {
+	Projet p = getProjet(idp);
+	for(Enregistrement e : p.getEnregistrements()){
+	  User u = e.getUser();
+	  if(u.getIdUser() == idu){
+		return e;
+	  }
+	}
+	throw new DataNotFound(
+			"getEnregistrementProjetUser: pas d'enregistrements pour ce User.");
   }
 
   public HashMap<Integer, Projet> getProjets() {

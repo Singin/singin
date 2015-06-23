@@ -5,6 +5,8 @@
  */
 package singin.interfaceEleve;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ListModel;
 import singin.ConsoleBdd;
 import singin.DataNotFound;
@@ -20,23 +22,23 @@ import singin.Projet;
 public class DetailProjetPanel extends javax.swing.JPanel {
 
   private GUIeleve jFrame;
-  private Projet projet;
   private Enregistrement eSelect;
   private Lecteur lecteur;
   private Enregistrement monEnregistrement;
 
   private enum ETAT {
 
-	PLAYALL, STOPALL, PLAYONE, PLAYMON, ARME, REC;
+	PLAYALL, STOPSANS, STOPAVEC, PLAYONE, PLAYMON, ARME, REC;
   };
 
   private ETAT etat;
 
   public DetailProjetPanel() {
 	initComponents();
-	etat = ETAT.STOPALL;
-	activateStopAll();
+	etat = ETAT.STOPSANS;
+	activateStopSans();
 	detailButton.setEnabled(false);
+
   }
 
   public void setjFrame(GUIeleve jFrame) {
@@ -45,12 +47,24 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 
   
   
-  public void activateStopAll() {
+  public void activateStopAvec() {
 	playAllButton.setEnabled(true);
 	stopAllButton.setEnabled(false);
 	playOneButton.setEnabled(true);
 	stopOneButton.setEnabled(false);
 	playMonButton.setEnabled(true);
+	stopMonButton.setEnabled(false);
+	recButton.setEnabled(true);
+	recButton.setSelected(false);
+
+  }
+  
+  public void activateStopSans() {
+	playAllButton.setEnabled(true);
+	stopAllButton.setEnabled(false);
+	playOneButton.setEnabled(true);
+	stopOneButton.setEnabled(false);
+	playMonButton.setEnabled(false);
 	stopMonButton.setEnabled(false);
 	recButton.setEnabled(true);
 	recButton.setSelected(false);
@@ -116,7 +130,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   }
   
   private void chargerListeEnregistrements() throws DataNotFound{
-	projet = jFrame.getProjet();
+	Projet projet = jFrame.getProjet();
 	ListModel<EnregistrementJList> model;
 	
 	model = ConsoleBdd.getBdd().getEnregistrementsJList(projet.getIdProjet());
@@ -125,7 +139,15 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 
   public void ouvrirProjet() throws DataNotFound {
 	
+	etat = ETAT.STOPSANS;
+	activateStopSans();
+	detailButton.setEnabled(false);
+	monEnregistrement = null;
+	lecteur = null;
+	eSelect = null;
+	
 	chargerListeEnregistrements();
+	
 	nomLabel.setText("");
 	prenomLabel.setText("");
 	instrumentLabel.setText("");
@@ -134,7 +156,6 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 	repondreTextArea.setText("");
 	monRecPanel.setVisible(false);
 	detailRecPanel.setVisible(false);
-	
   }
 
   /**
@@ -541,17 +562,20 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
   private void fermerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermerButtonActionPerformed
+
 	jFrame.fermerProjet();
   }//GEN-LAST:event_fermerButtonActionPerformed
 
     private void enregistrementsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_enregistrementsListValueChanged
-	  eSelect = ((EnregistrementJList)enregistrementsList.getSelectedValue()).getEnregistrement();
-	  detailButton.setEnabled(true);
+	  if(!enregistrementsList.isSelectionEmpty()){
+		eSelect = ((EnregistrementJList)enregistrementsList.getSelectedValue()).getEnregistrement();
+		detailButton.setEnabled(true);
+	  }
     }//GEN-LAST:event_enregistrementsListValueChanged
 
     private void playAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playAllButtonActionPerformed
 	  switch (etat) {
-		case STOPALL:
+		case STOPSANS:
 		  etat = ETAT.PLAYALL;
 		  activatePlayAll();
 		  demarrerLectureAll();
@@ -563,18 +587,36 @@ public class DetailProjetPanel extends javax.swing.JPanel {
 
     private void stopAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopAllButtonActionPerformed
 	  switch (etat) {
-		case STOPALL:
+		case STOPSANS:
 		  throw new RuntimeException();
 		case PLAYALL:
-		  etat = ETAT.STOPALL;
-		  activateStopAll();
+		  etat = ETAT.STOPSANS;
+		  activateStopSans();
 		  arreterLectureAll();
 		  break;
 	  }
     }//GEN-LAST:event_stopAllButtonActionPerformed
 
   private void monEnregistrementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monEnregistrementButtonActionPerformed
-	// TODO add your handling code here:
+	
+	try {
+	  monEnregistrement = ConsoleBdd.getBdd().getEnregistrementProjetUser(
+			  jFrame.getProjet().getIdProjet(), jFrame.getUser().getIdUser());
+	  etat = ETAT.STOPAVEC;
+	  activateStopAvec();
+	  
+	  commentaireTextArea.setText(monEnregistrement.getCommentaire());
+	  
+	  monRecPanel.setVisible(true);
+	  
+	} catch (DataNotFound ex) {
+	  System.out.println("Pas d'enregistrement pour cet user");
+	  monEnregistrement = null;
+	  
+	  
+	  //Logger.getLogger(DetailProjetPanel.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	
   }//GEN-LAST:event_monEnregistrementButtonActionPerformed
 
   private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
