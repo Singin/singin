@@ -30,8 +30,8 @@
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="nomTextField" max="32767" attributes="0"/>
-                          <Component id="motDePasseTextField" max="32767" attributes="0"/>
                           <Component id="connexionButton" pref="112" max="32767" attributes="0"/>
+                          <Component id="motDePassePasswordField" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -59,7 +59,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="motDePasseLabel" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                  <Component id="motDePasseTextField" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="motDePassePasswordField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="connexionButton" min="-2" max="-2" attributes="0"/>
@@ -104,8 +104,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="nomTextField">
     </Component>
-    <Component class="javax.swing.JTextField" name="motDePasseTextField">
-    </Component>
     <Component class="javax.swing.JButton" name="connexionButton">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -137,6 +135,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fermerButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="motDePassePasswordField">
     </Component>
   </SubComponents>
 </Form>

@@ -105,20 +105,18 @@ public class Bdd extends CModel {
 			  "Bdd.getProfesseurDuProjet: projet sans professeur.");
 	}
   }
-  
+
   public Eleve getEleve(String nom) throws singin.DataNotFound {
-        Eleve e = null;
-	for(Eleve value : eleves.values()) {
-            String n = value.getNom();
-            System.out.println("Utilisateur NON retrouvé");
-            if (n.equals(nom))
-            {
-                System.out.println("Utilisateur retrouvé");
-                e = value;
-                break;
-            }             
-    }
-        return e;
+	Eleve e = null;
+	for (Eleve eleve : eleves.values()) {
+	  String n = eleve.getNom().toLowerCase();
+	  if (n.equals(nom.toLowerCase())) {
+		System.out.println("Utilisateur retrouvé");
+		return eleve;
+	  }
+	}
+	System.out.println("Utilisateur NON retrouvé");
+	return e;
   }
 
   public ListModel<UserJList> getUsersJList() {
@@ -157,8 +155,6 @@ public class Bdd extends CModel {
   public HashMap<Integer, Eleve> getEleves() {
 	return eleves;
   }
-  
-  
 
   /**
    * *************************************************************************
@@ -172,8 +168,8 @@ public class Bdd extends CModel {
 	notifyViews();
 	return p.getIdProjet();
   }
-  
-  public int newProjet(Projet p){
+
+  public int newProjet(Projet p) {
 	projets.put(p.getIdProjet(), p);
 	notifyViews();
 	return p.getIdProjet();
@@ -195,8 +191,8 @@ public class Bdd extends CModel {
 	Projet proj = getProjet(idp);
 	proj.addEnregistrement(e);
   }
-  
-  public void addConsigneToProjet(int idp, String consigne) throws DataNotFound{
+
+  public void addConsigneToProjet(int idp, String consigne) throws DataNotFound {
 	Projet proj = getProjet(idp);
 	proj.addConsigne(consigne);
 	notifyViews();
