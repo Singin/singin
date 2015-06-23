@@ -5,6 +5,7 @@
  */
 package singin.interfaceEleve;
 
+import singin.Projet;
 import singin.User;
 
 /**
@@ -17,6 +18,7 @@ public class GUIeleve extends javax.swing.JFrame {
   private ETAT etat;
   
   private User user;
+  private Projet projet;
   
   /**
    * Creates new form GUIeleve
@@ -29,7 +31,9 @@ public class GUIeleve extends javax.swing.JFrame {
 	selectionProjetPanel1.setjFrame(this);
 	detailProjetPanel1.setjFrame(this);
 	
-	this.setSize(700, 850);
+	user = null;
+	
+	this.setSize(850, 700);
 	activationLogin();
 	
 	
@@ -44,6 +48,7 @@ public class GUIeleve extends javax.swing.JFrame {
 	  case LOGIN:
 		etat = ETAT.SELECTION;
 		activationSelection();
+		selectionProjetPanel1.ouvrir();
 		break;
 	  case SELECTION:
 		throw new RuntimeException();
@@ -54,13 +59,15 @@ public class GUIeleve extends javax.swing.JFrame {
 	}
   }
   
-  public void ouvrirProjet(){
+  public void ouvrirProjet(Projet projet){
 	switch(etat){
 	  case LOGIN:
 		throw new RuntimeException();
 	  case SELECTION:
 		etat = ETAT.DETAIL;
 		activationDetail();
+		this.projet = projet;
+		detailProjetPanel1.ouvrirProjet();
 		break;
 	  case DETAIL:
 		throw new RuntimeException();
@@ -109,12 +116,23 @@ public class GUIeleve extends javax.swing.JFrame {
   }
 
   public User getUser() {
-	return user;
+	if(user != null)
+	  return user;
+	return null;
   }
 
   public void setUser(User user) {
 	this.user = user;
   }
+
+  public Projet getProjet() {
+	return projet;
+  }
+
+  public void setProjet(Projet projet) {
+	this.projet = projet;
+  }
+  
   
   
   
