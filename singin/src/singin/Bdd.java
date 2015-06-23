@@ -154,6 +154,21 @@ public class Bdd extends CModel {
 	return res;
   }
 
+    /**
+     *
+     * @param ideleve
+     * @return
+     * @throws DataNotFound
+     */
+//    public ListModel<EnregistrementJList> getEnregistrementsEleveJList(int ideleve)
+//		  throws DataNotFound {
+//	DefaultListModel<EnregistrementJList> res = new DefaultListModel<>();
+//	//for (Enregistrement e : getEleve(ideleve).getEnregistrements()) {
+//	  res.addElement(e.getEnregistrementJList());
+//	}
+//	return res;
+//  }
+
   public HashMap<Integer, Projet> getProjets() {
 	return projets;
   }
