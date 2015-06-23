@@ -5,6 +5,8 @@
  */
 package singin.interfaceEleve;
 
+import singin.User;
+
 /**
  *
  * @author matt
@@ -13,6 +15,8 @@ public class GUIeleve extends javax.swing.JFrame {
 
   private enum ETAT { LOGIN, SELECTION, DETAIL};
   private ETAT etat;
+  
+  private User user;
   
   /**
    * Creates new form GUIeleve
@@ -25,12 +29,13 @@ public class GUIeleve extends javax.swing.JFrame {
 	selectionProjetPanel1.setjFrame(this);
 	detailProjetPanel1.setjFrame(this);
 	
+	this.setSize(700, 850);
 	activationLogin();
 	
 	
   }
 
-  private void ouvertureLogin(){
+  public void ouvertureLogin(){
 	
   }
   
@@ -102,6 +107,15 @@ public class GUIeleve extends javax.swing.JFrame {
   private void clearDataDetail(){
 	//detailProjetPanel1.clearData();
   }
+
+  public User getUser() {
+	return user;
+  }
+
+  public void setUser(User user) {
+	this.user = user;
+  }
+  
   
   
   /**
