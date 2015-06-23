@@ -21,11 +21,88 @@ public class GUIeleve extends javax.swing.JFrame {
 	initComponents();
 	
 	etat = ETAT.LOGIN;
+	loginPanel1.setjFrame(this);
+	selectionProjetPanel1.setjFrame(this);
+	detailProjetPanel1.setjFrame(this);
+	
+	activationLogin();
+	
+	
   }
 
   private void ouvertureLogin(){
 	
   }
+  
+  public void ouvrirSelection(){
+	switch(etat){
+	  case LOGIN:
+		etat = ETAT.SELECTION;
+		activationSelection();
+		break;
+	  case SELECTION:
+		throw new RuntimeException();
+	  case DETAIL:
+		etat = ETAT.SELECTION;
+		activationSelection();
+		break;
+	}
+  }
+  
+  public void ouvrirProjet(){
+	switch(etat){
+	  case LOGIN:
+		throw new RuntimeException();
+	  case SELECTION:
+		etat = ETAT.DETAIL;
+		activationDetail();
+		break;
+	  case DETAIL:
+		throw new RuntimeException();
+	}
+  }
+  
+  public void fermerProjet(){
+	switch(etat){
+	  case DETAIL:
+		etat = ETAT.SELECTION;
+		activationSelection();
+		break;
+	  case SELECTION:
+		throw new RuntimeException();
+	  case LOGIN:
+		throw new RuntimeException();
+	}
+  }
+  
+  public void fermer(){
+	
+	
+	this.dispose();
+  }
+  
+  private void activationLogin(){
+	loginPanel1.setVisible(true);
+	selectionProjetPanel1.setVisible(false);
+	detailProjetPanel1.setVisible(false);
+  }
+  
+  private void activationSelection(){
+	loginPanel1.setVisible(false);
+	selectionProjetPanel1.setVisible(true);
+	detailProjetPanel1.setVisible(false);
+  }
+  
+  private void activationDetail(){
+	loginPanel1.setVisible(false);
+	selectionProjetPanel1.setVisible(false);
+	detailProjetPanel1.setVisible(true);
+  }
+  
+  private void clearDataDetail(){
+	//detailProjetPanel1.clearData();
+  }
+  
   
   /**
    * This method is called from within the constructor to initialize the form.

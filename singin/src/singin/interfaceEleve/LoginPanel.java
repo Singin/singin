@@ -20,12 +20,20 @@ public class LoginPanel extends javax.swing.JPanel {
      * Creates new form LoginPanel
      */
     private Bdd bdd;
+	
+	private GUIeleve jFrame;
     
     public LoginPanel() {
         initComponents();
         bdd = new Bdd();
     }
 
+  public void setjFrame(GUIeleve jFrame) {
+	this.jFrame = jFrame;
+  }
+
+	
+	
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -138,10 +146,13 @@ public class LoginPanel extends javax.swing.JPanel {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+		
+		jFrame.ouvrirSelection();
     }//GEN-LAST:event_connexionButtonActionPerformed
 
   private void fermerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermerButtonActionPerformed
-    // TODO add your handling code here:
+    
+	jFrame.fermer();
   }//GEN-LAST:event_fermerButtonActionPerformed
 
 

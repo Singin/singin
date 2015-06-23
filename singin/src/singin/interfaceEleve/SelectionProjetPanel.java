@@ -11,6 +11,9 @@ package singin.interfaceEleve;
  */
 public class SelectionProjetPanel extends javax.swing.JPanel {
 
+  private GUIeleve jFrame;
+    
+  
     /**
      * Creates new form SelectionProjetPanel
      */
@@ -18,6 +21,12 @@ public class SelectionProjetPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+  public void setjFrame(GUIeleve jFrame) {
+	this.jFrame = jFrame;
+  }
+
+	
+	
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,6 +66,11 @@ public class SelectionProjetPanel extends javax.swing.JPanel {
     lb_hello.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
 
     fermerButton.setText("Fermer");
+    fermerButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        fermerButtonActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -113,8 +127,14 @@ public class SelectionProjetPanel extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
     private void ouvrirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ouvrirButtonActionPerformed
-        // TODO add your handling code here:
+        
+	  jFrame.ouvrirProjet();
     }//GEN-LAST:event_ouvrirButtonActionPerformed
+
+  private void fermerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermerButtonActionPerformed
+    
+	jFrame.fermer();
+  }//GEN-LAST:event_fermerButtonActionPerformed
 
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
