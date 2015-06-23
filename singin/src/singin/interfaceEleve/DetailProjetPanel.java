@@ -5,8 +5,11 @@
  */
 package singin.interfaceEleve;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ListModel;
 import singin.ConsoleBdd;
+import singin.DataNotFound;
 import singin.Enregistrement;
 import singin.EnregistrementJList;
 import singin.Lecteur;
@@ -18,74 +21,162 @@ import singin.Projet;
  */
 public class DetailProjetPanel extends javax.swing.JPanel {
 
-    private GUIeleve jFrame;
-    private Projet projet;
-    private Enregistrement enregistrementSelectionne;
-    private Lecteur lecteur;
+  private GUIeleve jFrame;
+  private Enregistrement eSelect;
+  private Lecteur lecteur;
+  private Enregistrement monEnregistrement;
 
-    private enum ETAT {
+  private enum ETAT {
 
-        PLAYALL, STOPALL;
-    };
+	PLAYALL, STOPSANS, STOPAVEC, PLAYONE, PLAYMON, ARME, REC;
+  };
 
-    private ETAT etat;
+  private ETAT etat;
 
-    public DetailProjetPanel() {
-        initComponents();
-        etat = ETAT.STOPALL;
-        activateStopAll();
-        detailButton.setEnabled(false);
-    }
+  public DetailProjetPanel() {
+	initComponents();
+	etat = ETAT.STOPSANS;
+	activateStopSans();
+	detailButton.setEnabled(false);
 
-    public void setjFrame(GUIeleve jFrame) {
-        this.jFrame = jFrame;
-    }
+  }
 
-    public void activateStopAll() {
-        playButton.setEnabled(true);
-        stopButton.setEnabled(false);
-    }
+  public void setjFrame(GUIeleve jFrame) {
+	this.jFrame = jFrame;
+  }
 
-    public void activatePlayAll() {
-        playButton.setEnabled(false);
-        stopButton.setEnabled(true);
-    }
-    
-    public void demarrerLectureAll(){
-        //Demarrer le lecteur
-    }
-    
-    public void arreterLectureAll(){
-        // arreter le lecteur
-    }
+  public void demarrerLectureAll() {
+	lecteur = new Lecteur();
+	lecteur.addSamples(jFrame.getProjet().getSamples());
+	lecteur.play();
+  }
 
-    public void ouvrirProjet() {
-        projet = jFrame.getProjet();
+  public void demarrerLectureOne() {
+	lecteur = new Lecteur();
+	lecteur.addSample(eSelect.getSample());
+	lecteur.play();
+  }
+
+  public void demarrerLectureMon() {
+	lecteur = new Lecteur();
+	lecteur.addSample(monEnregistrement.getSample());
+	lecteur.play();
+  }
+
+  public void arreterLecture() {
+	lecteur.stop();
+	lecteur = null;
+  }
+
+  public void activateStopAvec() {
+	playAllButton.setEnabled(true);
+	stopAllButton.setEnabled(false);
+	playOneButton.setEnabled(true);
+	stopOneButton.setEnabled(false);
+	playMonButton.setEnabled(true);
+	stopMonButton.setEnabled(false);
+	recButton.setEnabled(true);
+	recButton.setSelected(false);
+
+  }
+
+  public void activateStopSans() {
+	playAllButton.setEnabled(true);
+	stopAllButton.setEnabled(false);
+	playOneButton.setEnabled(true);
+	stopOneButton.setEnabled(false);
+	playMonButton.setEnabled(false);
+	stopMonButton.setEnabled(false);
+	recButton.setEnabled(true);
+	recButton.setSelected(false);
+
+  }
+
+  public void activatePlayAll() {
+	playAllButton.setEnabled(false);
+	stopAllButton.setEnabled(true);
+	playOneButton.setEnabled(false);
+	stopOneButton.setEnabled(false);
+	playMonButton.setEnabled(false);
+	stopMonButton.setEnabled(false);
+	recButton.setEnabled(false);
+  }
+
+  public void activatePlayOne() {
+	playAllButton.setEnabled(false);
+	stopAllButton.setEnabled(false);
+	playOneButton.setEnabled(false);
+	stopOneButton.setEnabled(true);
+	playMonButton.setEnabled(false);
+	stopMonButton.setEnabled(false);
+	recButton.setEnabled(false);
+  }
+
+  public void activatePlayMon() {
+	playAllButton.setEnabled(false);
+	stopAllButton.setEnabled(false);
+	playOneButton.setEnabled(false);
+	stopOneButton.setEnabled(false);
+	playMonButton.setEnabled(false);
+	stopMonButton.setEnabled(true);
+	recButton.setEnabled(false);
+  }
+
+  public void activateArme() {
+	playAllButton.setEnabled(false);
+	stopAllButton.setEnabled(false);
+	playOneButton.setEnabled(false);
+	stopOneButton.setEnabled(false);
+	playMonButton.setEnabled(true);
+	stopMonButton.setEnabled(true);
+	recButton.setEnabled(true);
+  }
+
+  public void activateRec() {
+	playAllButton.setEnabled(false);
+	stopAllButton.setEnabled(false);
+	playOneButton.setEnabled(false);
+	stopOneButton.setEnabled(false);
+	playMonButton.setEnabled(false);
+	stopMonButton.setEnabled(true);
+	recButton.setEnabled(false);
+  }
+
+  private void chargerListeEnregistrements() throws DataNotFound {
+	Projet projet = jFrame.getProjet();
 	ListModel<EnregistrementJList> model;
-//	try {
-//	  model = ConsoleBdd.getBdd().getEnregistrementsJList(projet.getIdProjet());
-//	  enregistrementsList.setModel(model);
-	  
-//	  lsl = new ListSelectionListener() {
-//	  @Override
-//	  public void valueChanged(ListSelectionEvent lse) {
-//		enregistrement = ((EnregistrementJList) enregistrementsList.getSelectedValue()).getEnregistrement();
-//		afficherDetail();
-//	  }
-//	};
-//	enregistrementsList.addListSelectionListener(lsl);
-//	} catch (DataNotFound ex) {
-//	  jFrame.fermerProjet();
-//	  //Logger.getLogger(DetailProjetPanel.class.getName()).log(Level.SEVERE, null, ex);
-//	}
-    }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.ben
-     */
-    @SuppressWarnings("unchecked")
+	model = ConsoleBdd.getBdd().getEnregistrementsJList(projet.getIdProjet());
+	enregistrementsList.setModel(model);
+  }
+
+  public void ouvrirProjet() throws DataNotFound {
+
+	etat = ETAT.STOPSANS;
+	activateStopSans();
+	detailButton.setEnabled(false);
+	monEnregistrement = null;
+	lecteur = null;
+	eSelect = null;
+
+	chargerListeEnregistrements();
+
+	nomLabel.setText("");
+	prenomLabel.setText("");
+	instrumentLabel.setText("");
+	dateLabel.setText("");
+	commentaireTextArea.setText("");
+	repondreTextArea.setText("");
+	monRecPanel.setVisible(false);
+	detailRecPanel.setVisible(false);
+  }
+
+  /**
+   * This method is called from within the constructor to initialize the form.
+   * WARNING: Do NOT modify this code. The content of this method is always
+   * regenerated by the Form Editor.ben
+   */
+  @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
@@ -112,11 +203,11 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     enregistrementLabel = new javax.swing.JLabel();
     detailButton = new javax.swing.JButton();
     rafraichirButton = new javax.swing.JButton();
-    playButton = new javax.swing.JButton();
-    stopButton = new javax.swing.JButton();
+    playAllButton = new javax.swing.JButton();
+    stopAllButton = new javax.swing.JButton();
     monEnregistrementButton = new javax.swing.JButton();
     fermerButton = new javax.swing.JButton();
-    jPanel1 = new javax.swing.JPanel();
+    monRecPanel = new javax.swing.JPanel();
     commentaireLabel = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
     repondreLabel = new javax.swing.JLabel();
@@ -124,24 +215,25 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     jScrollPane4 = new javax.swing.JScrollPane();
     repondreTextArea = new javax.swing.JTextArea();
     dateLabel = new javax.swing.JLabel();
-    playButton1 = new javax.swing.JButton();
+    playMonButton = new javax.swing.JButton();
     validerButton = new javax.swing.JButton();
-    recButton = new javax.swing.JButton();
     annulerButton = new javax.swing.JButton();
     jLabel3 = new javax.swing.JLabel();
     jLabel4 = new javax.swing.JLabel();
     supprimerButton = new javax.swing.JButton();
     jScrollPane5 = new javax.swing.JScrollPane();
     commentaireTextArea = new javax.swing.JTextArea();
-    jPanel2 = new javax.swing.JPanel();
+    stopMonButton = new javax.swing.JButton();
+    recButton = new javax.swing.JToggleButton();
+    detailRecPanel = new javax.swing.JPanel();
     jSeparator4 = new javax.swing.JSeparator();
-    playButton2 = new javax.swing.JButton();
+    playOneButton = new javax.swing.JButton();
     pauseButton = new javax.swing.JButton();
-    stopButton1 = new javax.swing.JButton();
+    stopOneButton = new javax.swing.JButton();
     jLabel5 = new javax.swing.JLabel();
     nomLabel = new javax.swing.JLabel();
     prenomLabel = new javax.swing.JLabel();
-    instrumentButton = new javax.swing.JLabel();
+    instrumentLabel = new javax.swing.JLabel();
 
     jLabel7.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
     jLabel7.setText("Commentaire du professeur :");
@@ -199,24 +291,34 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     enregistrementLabel.setText("Liste des enregistrements :");
 
     detailButton.setText("Voir detail");
-
-    rafraichirButton.setText("Raffraichir");
-
-    playButton.setText("Play");
-    playButton.addActionListener(new java.awt.event.ActionListener() {
+    detailButton.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        playButtonActionPerformed(evt);
+        detailButtonActionPerformed(evt);
       }
     });
 
-    stopButton.setText("Stop");
-    stopButton.addActionListener(new java.awt.event.ActionListener() {
+    rafraichirButton.setText("Raffraichir");
+
+    playAllButton.setText("Play");
+    playAllButton.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        stopButtonActionPerformed(evt);
+        playAllButtonActionPerformed(evt);
+      }
+    });
+
+    stopAllButton.setText("Stop");
+    stopAllButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        stopAllButtonActionPerformed(evt);
       }
     });
 
     monEnregistrementButton.setText("Mon enregistrement");
+    monEnregistrementButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        monEnregistrementButtonActionPerformed(evt);
+      }
+    });
 
     fermerButton.setText("Fermer le projet");
     fermerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -261,15 +363,19 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     commentaireTextArea.setRows(5);
     jScrollPane5.setViewportView(commentaireTextArea);
 
-    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-    jPanel1.setLayout(jPanel1Layout);
-    jPanel1Layout.setHorizontalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel1Layout.createSequentialGroup()
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel1Layout.createSequentialGroup()
+    stopMonButton.setText("Stop");
+
+    recButton.setText("jToggleButton1");
+
+    javax.swing.GroupLayout monRecPanelLayout = new javax.swing.GroupLayout(monRecPanel);
+    monRecPanel.setLayout(monRecPanelLayout);
+    monRecPanelLayout.setHorizontalGroup(
+      monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(monRecPanelLayout.createSequentialGroup()
+        .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(monRecPanelLayout.createSequentialGroup()
             .addGap(26, 26, 26)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
               .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
               .addComponent(jScrollPane5)
               .addComponent(jSeparator2)
@@ -277,25 +383,31 @@ public class DetailProjetPanel extends javax.swing.JPanel {
               .addComponent(supprimerButton)
               .addComponent(dateLabel)
               .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(playButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addComponent(recButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel3)
-                  .addComponent(jLabel4)))
+              .addGroup(monRecPanelLayout.createSequentialGroup()
+                .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                  .addComponent(playMonButton, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                  .addComponent(recButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addGroup(monRecPanelLayout.createSequentialGroup()
+                    .addComponent(jLabel3)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stopMonButton)
+                    .addGap(43, 43, 43))
+                  .addGroup(monRecPanelLayout.createSequentialGroup()
+                    .addComponent(jLabel4)
+                    .addGap(0, 0, Short.MAX_VALUE))))
               .addComponent(commentaireLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addGroup(jPanel1Layout.createSequentialGroup()
+          .addGroup(monRecPanelLayout.createSequentialGroup()
             .addGap(103, 103, 103)
             .addComponent(validerButton)
             .addGap(18, 18, 18)
             .addComponent(annulerButton)))
         .addContainerGap(26, Short.MAX_VALUE))
     );
-    jPanel1Layout.setVerticalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel1Layout.createSequentialGroup()
+    monRecPanelLayout.setVerticalGroup(
+      monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(monRecPanelLayout.createSequentialGroup()
         .addContainerGap()
         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -303,13 +415,15 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(dateLabel)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(playButton1)
-          .addComponent(jLabel3))
+        .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(stopMonButton))
+          .addComponent(playMonButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(recButton)
-          .addComponent(jLabel4))
+        .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel4)
+          .addComponent(recButton))
         .addGap(18, 18, 18)
         .addComponent(supprimerButton)
         .addGap(11, 11, 11)
@@ -321,17 +435,27 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGroup(monRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(validerButton)
           .addComponent(annulerButton))
         .addContainerGap())
     );
 
-    playButton2.setText("Play");
+    playOneButton.setText("Play");
+    playOneButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        playOneButtonActionPerformed(evt);
+      }
+    });
 
     pauseButton.setText("Pause");
 
-    stopButton1.setText("Stop");
+    stopOneButton.setText("Stop");
+    stopOneButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        stopOneButtonActionPerformed(evt);
+      }
+    });
 
     jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
     jLabel5.setForeground(new java.awt.Color(0, 51, 51));
@@ -343,35 +467,35 @@ public class DetailProjetPanel extends javax.swing.JPanel {
     prenomLabel.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
     prenomLabel.setText("Prenom :");
 
-    instrumentButton.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-    instrumentButton.setText("Instrument :");
+    instrumentLabel.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
+    instrumentLabel.setText("Instrument :");
 
-    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-    jPanel2.setLayout(jPanel2Layout);
-    jPanel2Layout.setHorizontalGroup(
-      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel2Layout.createSequentialGroup()
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel2Layout.createSequentialGroup()
+    javax.swing.GroupLayout detailRecPanelLayout = new javax.swing.GroupLayout(detailRecPanel);
+    detailRecPanel.setLayout(detailRecPanelLayout);
+    detailRecPanelLayout.setHorizontalGroup(
+      detailRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(detailRecPanelLayout.createSequentialGroup()
+        .addGroup(detailRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(detailRecPanelLayout.createSequentialGroup()
             .addGap(29, 29, 29)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(instrumentButton)
+            .addGroup(detailRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(instrumentLabel)
               .addComponent(prenomLabel)
               .addComponent(nomLabel)
               .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addGroup(jPanel2Layout.createSequentialGroup()
+          .addGroup(detailRecPanelLayout.createSequentialGroup()
             .addGap(93, 93, 93)
-            .addComponent(playButton2)
+            .addComponent(playOneButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(pauseButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(stopButton1)))
+            .addComponent(stopOneButton)))
         .addContainerGap(20, Short.MAX_VALUE))
     );
-    jPanel2Layout.setVerticalGroup(
-      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel2Layout.createSequentialGroup()
+    detailRecPanelLayout.setVerticalGroup(
+      detailRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(detailRecPanelLayout.createSequentialGroup()
         .addGap(36, 36, 36)
         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -381,12 +505,12 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addGap(18, 18, 18)
         .addComponent(prenomLabel)
         .addGap(18, 18, 18)
-        .addComponent(instrumentButton)
+        .addComponent(instrumentLabel)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(playButton2)
+        .addGroup(detailRecPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(playOneButton)
           .addComponent(pauseButton)
-          .addComponent(stopButton1))
+          .addComponent(stopOneButton))
         .addGap(56, 56, 56))
     );
 
@@ -398,29 +522,33 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
             .addGap(104, 104, 104)
-            .addComponent(playButton)
+            .addComponent(playAllButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(stopButton))
+            .addComponent(stopAllButton))
           .addGroup(layout.createSequentialGroup()
             .addGap(26, 26, 26)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                  .addComponent(enregistrementLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(detailButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(rafraichirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(monEnregistrementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-          .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(18, 18, 18)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(fermerButton))
-        .addContainerGap(23, Short.MAX_VALUE))
+              .addComponent(enregistrementLabel)
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                  .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(detailButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rafraichirButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(monEnregistrementButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))))
+          .addComponent(detailRecPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(261, 261, 261)
+            .addComponent(fermerButton)
+            .addContainerGap(246, Short.MAX_VALUE))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(monRecPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(213, 213, 213))))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,7 +556,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
         .addGap(23, 23, 23)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(monRecPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(fermerButton))
           .addGroup(layout.createSequentialGroup()
@@ -439,7 +567,7 @@ public class DetailProjetPanel extends javax.swing.JPanel {
             .addComponent(enregistrementLabel)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addGroup(layout.createSequentialGroup()
+              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(detailButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rafraichirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -448,46 +576,158 @@ public class DetailProjetPanel extends javax.swing.JPanel {
               .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(playButton)
-              .addComponent(stopButton))
+              .addComponent(playAllButton)
+              .addComponent(stopAllButton))
             .addGap(18, 18, 18)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(detailRecPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
 
   private void fermerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermerButtonActionPerformed
-      jFrame.fermerProjet();
+
+	jFrame.fermerProjet();
   }//GEN-LAST:event_fermerButtonActionPerformed
 
     private void enregistrementsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_enregistrementsListValueChanged
-        //enregistrementSelectionne = (Enregistrement) enregistrementsList.getSelectedValue();
-        detailButton.setEnabled(true);
+	  if (!enregistrementsList.isSelectionEmpty()) {
+		eSelect = ((EnregistrementJList) enregistrementsList.getSelectedValue()).getEnregistrement();
+		detailButton.setEnabled(true);
+	  }
     }//GEN-LAST:event_enregistrementsListValueChanged
 
-    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        switch (etat) {
-            case STOPALL:
-                etat = ETAT.PLAYALL;
-                activatePlayAll();
-                demarrerLectureAll();
-                break;
-            case PLAYALL:
-                throw new RuntimeException();
-        }
-    }//GEN-LAST:event_playButtonActionPerformed
+    private void playAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playAllButtonActionPerformed
+	  switch (etat) {
+		case STOPSANS:
+		  etat = ETAT.PLAYALL;
+		  activatePlayAll();
+		  demarrerLectureAll();
+		  break;
+		case PLAYALL:
+		  throw new RuntimeException();
+		case STOPAVEC:
+		  etat = ETAT.PLAYALL;
+		  activatePlayAll();
+		  demarrerLectureAll();
+		  break;
+		case PLAYONE:
+		  throw new RuntimeException();
+		case PLAYMON:
+		  throw new RuntimeException();
+		case ARME:
+		  throw new RuntimeException();
+		case REC:
+		  throw new RuntimeException();
+	  }
 
-    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-                switch (etat) {
-            case STOPALL:
-                throw new RuntimeException();
-            case PLAYALL:
-                etat = ETAT.STOPALL;
-                activateStopAll();
-                arreterLectureAll();
-                break;
-        }
-    }//GEN-LAST:event_stopButtonActionPerformed
+    }//GEN-LAST:event_playAllButtonActionPerformed
+
+    private void stopAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopAllButtonActionPerformed
+	  switch (etat) {
+		case STOPSANS:
+		  throw new RuntimeException();
+		case PLAYALL:
+		  if (monEnregistrement == null) {
+			etat = ETAT.STOPSANS;
+			activateStopSans();
+		  } else {
+			etat = ETAT.STOPAVEC;
+			activateStopAvec();
+		  }
+		  arreterLecture();
+		  break;
+		case STOPAVEC:
+		  throw new RuntimeException();
+		case PLAYONE:
+		  throw new RuntimeException();
+		case PLAYMON:
+		  throw new RuntimeException();
+		case ARME:
+		  throw new RuntimeException();
+		case REC:
+		  throw new RuntimeException();
+	  }
+    }//GEN-LAST:event_stopAllButtonActionPerformed
+
+  private void monEnregistrementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monEnregistrementButtonActionPerformed
+
+	try {
+	  monEnregistrement = ConsoleBdd.getBdd().getEnregistrementProjetUser(
+			  jFrame.getProjet().getIdProjet(), jFrame.getUser().getIdUser());
+	  etat = ETAT.STOPAVEC;
+	  activateStopAvec();
+
+	  commentaireTextArea.setText(monEnregistrement.getCommentaire());
+
+	  monRecPanel.setVisible(true);
+
+	} catch (DataNotFound ex) {
+	  System.out.println("Pas d'enregistrement pour cet user");
+	  monEnregistrement = null;
+
+	  //Logger.getLogger(DetailProjetPanel.class.getName()).log(Level.SEVERE, null, ex);
+	}
+
+  }//GEN-LAST:event_monEnregistrementButtonActionPerformed
+
+  private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
+	nomLabel.setText(eSelect.getUser().getNom());
+	prenomLabel.setText(eSelect.getUser().getPrenom());
+	instrumentLabel.setText(eSelect.getUser().getInstrument());
+	detailRecPanel.setVisible(true);
+  }//GEN-LAST:event_detailButtonActionPerformed
+
+  private void playOneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playOneButtonActionPerformed
+    switch (etat) {
+		case STOPSANS:
+		  etat = ETAT.PLAYONE;
+		  activatePlayOne();
+		  demarrerLectureOne();
+		  break;
+		case PLAYALL:
+		  throw new RuntimeException();
+		case STOPAVEC:
+		  etat = ETAT.PLAYONE;
+		  activatePlayOne();
+		  demarrerLectureOne();
+		  break;
+		case PLAYONE:
+		  throw new RuntimeException();
+		case PLAYMON:
+		  throw new RuntimeException();
+		case ARME:
+		  throw new RuntimeException();
+		case REC:
+		  throw new RuntimeException();
+	  }
+  }//GEN-LAST:event_playOneButtonActionPerformed
+
+  private void stopOneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopOneButtonActionPerformed
+    switch (etat) {
+		case STOPSANS:
+		  throw new RuntimeException();
+		case PLAYALL:
+		  throw new RuntimeException();
+		case STOPAVEC:
+		  throw new RuntimeException();
+		case PLAYONE:
+		  if (monEnregistrement == null) {
+			etat = ETAT.STOPSANS;
+			activateStopSans();
+		  } else {
+			etat = ETAT.STOPAVEC;
+			activateStopAvec();
+		  }
+		  arreterLecture();
+		  break;
+		case PLAYMON:
+		  throw new RuntimeException();
+		case ARME:
+		  throw new RuntimeException();
+		case REC:
+		  throw new RuntimeException();
+	  }
+  }//GEN-LAST:event_stopOneButtonActionPerformed
 
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -496,10 +736,11 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   private javax.swing.JTextArea commentaireTextArea;
   private javax.swing.JLabel dateLabel;
   private javax.swing.JButton detailButton;
+  private javax.swing.JPanel detailRecPanel;
   private javax.swing.JLabel enregistrementLabel;
   private javax.swing.JList enregistrementsList;
   private javax.swing.JButton fermerButton;
-  private javax.swing.JLabel instrumentButton;
+  private javax.swing.JLabel instrumentLabel;
   private javax.swing.JButton jButton10;
   private javax.swing.JButton jButton11;
   private javax.swing.JButton jButton12;
@@ -516,8 +757,6 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   private javax.swing.JLabel jLabel7;
   private javax.swing.JLabel jLabel8;
   private javax.swing.JLabel jLabel9;
-  private javax.swing.JPanel jPanel1;
-  private javax.swing.JPanel jPanel2;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JScrollPane jScrollPane3;
@@ -530,18 +769,20 @@ public class DetailProjetPanel extends javax.swing.JPanel {
   private javax.swing.JTextArea jTextArea1;
   private javax.swing.JTextArea jTextArea2;
   private javax.swing.JButton monEnregistrementButton;
+  private javax.swing.JPanel monRecPanel;
   private javax.swing.JLabel nomLabel;
   private javax.swing.JButton pauseButton;
-  private javax.swing.JButton playButton;
-  private javax.swing.JButton playButton1;
-  private javax.swing.JButton playButton2;
+  private javax.swing.JButton playAllButton;
+  private javax.swing.JButton playMonButton;
+  private javax.swing.JButton playOneButton;
   private javax.swing.JLabel prenomLabel;
   private javax.swing.JButton rafraichirButton;
-  private javax.swing.JButton recButton;
+  private javax.swing.JToggleButton recButton;
   private javax.swing.JLabel repondreLabel;
   private javax.swing.JTextArea repondreTextArea;
-  private javax.swing.JButton stopButton;
-  private javax.swing.JButton stopButton1;
+  private javax.swing.JButton stopAllButton;
+  private javax.swing.JButton stopMonButton;
+  private javax.swing.JButton stopOneButton;
   private javax.swing.JButton supprimerButton;
   private javax.swing.JButton validerButton;
   // End of variables declaration//GEN-END:variables

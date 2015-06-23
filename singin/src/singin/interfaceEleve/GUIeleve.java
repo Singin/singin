@@ -5,6 +5,7 @@
  */
 package singin.interfaceEleve;
 
+import singin.DataNotFound;
 import singin.Projet;
 import singin.User;
 
@@ -33,7 +34,7 @@ public class GUIeleve extends javax.swing.JFrame {
 	
 	user = null;
 	
-	this.setSize(850, 700);
+	this.setSize(1000, 700);
 	activationLogin();
 	
 	
@@ -59,7 +60,7 @@ public class GUIeleve extends javax.swing.JFrame {
 	}
   }
   
-  public void ouvrirProjet(Projet projet){
+  public void ouvrirProjet(Projet projet) throws DataNotFound{
 	switch(etat){
 	  case LOGIN:
 		throw new RuntimeException();

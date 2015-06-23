@@ -17,6 +17,7 @@ public class Enregistrement implements Serializable {
   private Sample sample;
   private String path;
   private User user;
+  private String commentaire;
   
   /* Gestion des instances */
   private static int nbInstances = 0;
@@ -107,6 +108,16 @@ public class Enregistrement implements Serializable {
   public EnregistrementJList getEnregistrementJList(){
 	return new EnregistrementJList(this);
   }
+
+  public String getCommentaire() {
+	return commentaire;
+  }
+
+  public void setCommentaire(String commentaire) {
+	this.commentaire = commentaire;
+  }
+  
+  
   
   /****************************************************************************/
   /***** AFFICHAGE ************************************************************/
